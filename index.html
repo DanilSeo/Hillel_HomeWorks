@@ -13,18 +13,19 @@
         let name = prompt ('Как тебя зовут?', '');
         let age = prompt ('Сколько тебе лет?', '');
         let question = confirm ('Алкоголь употребляем?');
-        if (!question == true) {
-            alert(name + ', ' + 'молодец, так держать!');
-        }
-        if (age > 40) {
-            alert(name + ', ' + 'Не злоупотребляйте!');
-        }
-        if (age <= 40 && age >=18) {
-            alert(name + ', ' + 'только пиво с водкой не мешай!');
-        }
-        if (age < 18) {
-            alert(name + ', ' + 'а-я-яй! Маме расскажу!');
-        }
+        if (!question) {
+            alert(name + ', молодец, так держать!')
+        } else {
+          if ( age < 18) {
+            alert(name + ', а-я-яй! Маме расскажу!');
+            }
+          if (age <= 40 && age >=18) {
+            alert(name + ', только пиво с водкой не мешай!');
+            }
+          if (age > 40) {
+            alert(name + ', не злоупотребляйте!');
+            }
+          }
     </script>
 </body>
 </html>
