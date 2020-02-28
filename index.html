@@ -11,7 +11,7 @@
     <script>
         "use strict";
         let name = prompt ('Как тебя зовут?', '');
-        let age = prompt ('Сколько тебе лет?', '');
+        let age = +prompt ('Сколько тебе лет?', '');
         let question = confirm ('Алкоголь употребляем?');
         if (!question) {
             alert(name + ', молодец, так держать!')
