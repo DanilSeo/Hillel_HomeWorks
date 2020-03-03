@@ -10,15 +10,48 @@
     
     <script>
    "use strict";
-   let heigth = +prompt('Введите число','');
-   let triangle = '';
-    for (let i = 1; i <= heigth; i++) {
-    for (let j = 0; j < i; j++) {
-      triangle += '*';
-    }
-      triangle += '\n';
-    }
-   console.log(triangle); 
+const PI = 3.145;
+  
+  function squareCircle() {
+   let radius = +prompt('Введите радиус окружности для расчета площади', '');
+   let result = PI * radius * radius;
+   return result;
+   }
+   alert('Площадь круга: ' + squareCircle()); 
+ 
+  function perimetrCircle() {
+   let radius = +prompt('Введите радиус для расчета периметра', '');
+   let result = 2 * PI * radius;
+   return result;
+   }
+   alert('Длина окружности: ' + perimetrCircle()); 
+
+  function getAverage() {
+   let a = +prompt('Введите число', '');
+   let b = +prompt('Введите число', '');
+   let result = (a + b)/2;
+   return result;
+   }
+   alert('Среднее: ' + getAverage()); 
+
+function operation(a,b,act) {
+   if (act === '*') {
+       return a * b;
+   }
+   if (act === '/') {
+       return a / b;
+   }
+   if (act === '+') {
+       return a + b;
+   }
+   if (act === '-') {
+       return a - b;
+   }
+}
+  alert('Результат: ' + operation(50,6,'-'));
+  alert('Результат: ' + operation(45,6,'+'));
+  alert('Результат: ' + operation(30,5,'/'));
+  alert('Результат: ' + operation(3,8,'*'));
  </script>
 </body>
 </html>
