@@ -10,71 +10,57 @@
     
 <script>
    "use strict";
-   const arr = [-246, 753, -468, 475, -683, 476, -583, 746, -581]
-   let sum = arr.reduce(function(acc, current) {
-           return acc += current;
-        });
-        console.log(sum);
-    
-    let negativeArr = arr.filter (function(item) {
-        return item < 0; 
-    });
-     console.log(negativeArr);
-   
-   let ascending =  arr.sort(function(a,b) {
-       return a - b;
-   });
-   console.log(ascending);
+  let keys = [
 
-   let reverseArr = arr.reverse();
-   console.log(reverseArr);
+['number', 42, true, false, false],
 
-   let divideArr = arr.map (function(item) {
-        return item / 2; 
-    });
-    console.log(divideArr);
+['result', true, false, false, false],
 
-    //Задача №2//
-    const str = "12, 42, 63, 56, 122, 17, 117, 25, 645, 722, 964";
-    let Numbers = str.split(', ').map (function(item) {
-      return +item;
-    });
-    console.log(Numbers);
-    let evenArr = Numbers.filter (function(item) {
-        return item % 2 === 0; 
-    });
-     console.log(evenArr);
-
- //Задача №3//
-   const footballPlayer = [
-
-  ['name', 'Lionel'],
- ['position', 'Forward'],
-
- ['age', 32],
-
- ['score', 95]
+['alertMessage', 'Hello', true, true, true]
 
 ];
-function makeObjectFromScheme(footballPlayer) {
-            let object = {};
-            footballPlayer.forEach(function(item) {
-                object[item[0]] = item[1];
-            })
-            return object;
-        };
-console.log(makeObjectFromScheme(footballPlayer));
-let objectPlayer = makeObjectFromScheme(footballPlayer);
 
-//Задача №4//
-function makeArrayFromObject(object) {
-            let arr = [];
-            for(let prop in object) {
-                arr.push([prop, object[prop]]);
-            }          
-            return arr;
-        }
-        console.log(makeArrayFromObject(objectPlayer));
+function createObject(keys) {
+    let newObj = {};
+    keys.forEach(function(el){
+        Object.defineProperty(newObj, el[0], {
+            value: el[1],
+            enumerable: el[2],
+            writable: el[3],
+            configurable: el[4]
+        });
+    });
+
+    return newObj;
+}
+/* Почему при возвращении объекта ключи не в том же порядке, что и массивы?*/
+console.log(createObject(keys));
+
+let obj1 = {
+value: 42,
+value2: true
+};
+
+
+let obj2 = {
+value: 42,
+value2: true
+};
+
+
+function compareObj(obj1, obj2) {
+
+let keys1 = Object.keys(obj1);
+let keys2 = Object.keys(obj2);
+
+if(keys1.length === keys2.length) {
+    return keys1.every(el => {
+        return obj1[el] === obj2[el];
+    })
+    }
+    return false;
+};
+console.log(compareObj(obj1, obj2));
 </script>
 </body>
 </html>
