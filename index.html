@@ -6,75 +6,70 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Arguments</h1>
-    
+    <h1>DOM</h1>
+    <div class="container"></div>
 <script>
    "use strict";
-   const arr = [-246, 753, -468, 475, -683, 476, -583, 746, -581]
-   let sum = arr.reduce(function(acc, current) {
-           return acc += current;
-        });
-        console.log(sum);
-    
-    let negativeArr = arr.filter (function(item) {
-        return item < 0; 
-    });
-     console.log(negativeArr);
-   
-   let ascending =  arr.sort(function(a,b) {
-       return a - b;
-   });
-   console.log(ascending);
+   let arrMain = ['Marvel', 'DC', 'Vertigo'];
+        let arrInsert1 = ['Marvel', ['Iron Man', 'Avengers', 'X-Men'], 'DC', ['Batman','Superman','Flash'] ,'Vertigo'];
+        let arrInsert2 = ['Marvel', ['Iron Man', 'Avengers', ['Civil War', 'Infinity War'], 'X-Men'], 'DC', ['Batman',['Long Halloween', 'Killing Joke'],'Superman','Flash'], 'Vertigo'];
 
-   let reverseArr = arr.reverse();
-   console.log(reverseArr);
+        const $container = document.querySelector('.container'); 
 
-   let divideArr = arr.map (function(item) {
-        return item / 2; 
-    });
-    console.log(divideArr);
+        $container.append(generateList(arrMain));        
+        $container.append(generateList(arrInsert1)); 
+        $container.append(generateList(arrInsert2)); 
 
-    //Задача №2//
-    const str = "12, 42, 63, 56, 122, 17, 117, 25, 645, 722, 964";
-    let Numbers = str.split(', ').map (function(item) {
-      return +item;
-    });
-    console.log(Numbers);
-    let evenArr = Numbers.filter (function(item) {
-        return item % 2 === 0; 
-    });
-     console.log(evenArr);
-
- //Задача №3//
-   const footballPlayer = [
-
-  ['name', 'Lionel'],
- ['position', 'Forward'],
-
- ['age', 32],
-
- ['score', 95]
-
-];
-function makeObjectFromScheme(footballPlayer) {
-            let object = {};
-            footballPlayer.forEach(function(item) {
-                object[item[0]] = item[1];
-            })
-            return object;
-        };
-console.log(makeObjectFromScheme(footballPlayer));
-let objectPlayer = makeObjectFromScheme(footballPlayer);
-
-//Задача №4//
-function makeArrayFromObject(object) {
-            let arr = [];
-            for(let prop in object) {
-                arr.push([prop, object[prop]]);
-            }          
-            return arr;
+        function generateList(arr) {
+            let $list = document.createElement('ul');
+            let listItems = '';
+            arr.forEach(function(el) { 
+                if(Array.isArray(el)){
+                    el = generateList(el).outerHTML;
+                }
+                listItems += `<li>${el}</li>`                
+            });
+            $list.innerHTML = listItems;
+            return $list;
         }
-        console.log(makeArrayFromObject(objectPlayer));
-</script>
+    console.dir($container);
+
+
+$container.after(fillTable(createTable(10, 10)));
+
+for(let el of document.querySelectorAll('table')) {
+    el.style = 'border-collapse: separate; margin: 15px;'; 
+}
+for(let el of document.querySelectorAll('td')) {
+    el.style = 'border : 1px solid green; color: red; padding: 5px; text-align: center;';
+} 
+
+function createTable(row, col) {
+    let $table = document.createElement('table');
+    let tableInner = '';
+    for(let i = 1; i <= row; i++){
+        let row = '<tr>';
+        for(let j = 1; j <= col; j++) {
+            row += `<td></td>`;
+        }
+        row +='</tr>';
+        tableInner += row;
+    } 
+    $table.innerHTML = tableInner; 
+    return $table;
+}
+
+
+function fillTable($table) {
+   let count = 1;
+   for(let tr of $table.rows) {
+       for(let td of tr.cells) {
+           td.innerHTML = count++;
+       }
+   }
+   return $table;
+}
+ </script>
 </body>
 </html>
+
