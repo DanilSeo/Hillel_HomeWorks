@@ -6,70 +6,78 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>DOM</h1>
-    <div class="container"></div>
-<script>
-   "use strict";
-   let arrMain = ['Marvel', 'DC', 'Vertigo'];
-        let arrInsert1 = ['Marvel', ['Iron Man', 'Avengers', 'X-Men'], 'DC', ['Batman','Superman','Flash'] ,'Vertigo'];
-        let arrInsert2 = ['Marvel', ['Iron Man', 'Avengers', ['Civil War', 'Infinity War'], 'X-Men'], 'DC', ['Batman',['Long Halloween', 'Killing Joke'],'Superman','Flash'], 'Vertigo'];
+   
+    <div class="container">
+        <div class="box" style="background-color: white"></div>
+        <div class="box" style="background-color: white"></div>
+        <div class="box" style="background-color: white"></div>
+        <div class="box" style="background-color: white"></div>
+        <div class="box" style="background-color: white"></div>
+    </div>
 
-        const $container = document.querySelector('.container'); 
+    <div class="marvel heroes">Task #2</div>
 
-        $container.append(generateList(arrMain));        
-        $container.append(generateList(arrInsert1)); 
-        $container.append(generateList(arrInsert2)); 
+    <style>
+        .box {
+            float: left;
+            height: 100px;
+            width: 100px;
+            border: 2px solid black;
+            margin-right: 15px;
 
-        function generateList(arr) {
-            let $list = document.createElement('ul');
-            let listItems = '';
-            arr.forEach(function(el) { 
-                if(Array.isArray(el)){
-                    el = generateList(el).outerHTML;
-                }
-                listItems += `<li>${el}</li>`                
-            });
-            $list.innerHTML = listItems;
-            return $list;
         }
-    console.dir($container);
-
-
-$container.after(fillTable(createTable(10, 10)));
-
-for(let el of document.querySelectorAll('table')) {
-    el.style = 'border-collapse: separate; margin: 15px;'; 
-}
-for(let el of document.querySelectorAll('td')) {
-    el.style = 'border : 1px solid green; color: red; padding: 5px; text-align: center;';
-} 
-
-function createTable(row, col) {
-    let $table = document.createElement('table');
-    let tableInner = '';
-    for(let i = 1; i <= row; i++){
-        let row = '<tr>';
-        for(let j = 1; j <= col; j++) {
-            row += `<td></td>`;
+        .Hulk {
+            float: right;
+            background-color: blueviolet;
+            border: 1px solid sienna;
+            color: white;
+            font-size: 30px;
+            padding: 20px;
         }
-        row +='</tr>';
-        tableInner += row;
-    } 
-    $table.innerHTML = tableInner; 
-    return $table;
-}
+    </style>
+    
+      <script>
+          'use strict';
+       
+        let $boxes = document.querySelectorAll('.box');
+        $boxes.forEach(function(box){
+            box.addEventListener('click', function(){
+                let changeBoxColor = box.style.backgroundColor;
 
+              switch(changeBoxColor) {
+                  case 'white': box.style.backgroundColor = 'aqua'; break;
+                  case 'aqua': box.style.backgroundColor = 'red'; break;
+                  case 'red': box.style.backgroundColor = 'orange'; break;
+                  case 'orange': box.style.backgroundColor = 'green'; break;
+                  case 'green': box.style.backgroundColor = 'violet'; break;
+                  default: box.style.backgroundColor = 'white';
+              }
+            })
+            box.addEventListener('click', function lastPlace() {
+              let $container = document.querySelector('.container')
 
-function fillTable($table) {
-   let count = 1;
-   for(let tr of $table.rows) {
-       for(let td of tr.cells) {
-           td.innerHTML = count++;
-       }
+              $container.append(this);
+            })
+        });
+        const $newDiv= document.querySelector('.marvel');
+
+    toggleClass($newDiv, 'Hulk');
+
+    function toggleClass(el, newClass){ 
+    let classList = el.className.split(' ');
+    let index = classList.indexOf(newClass);
+    if(index >= 0){
+        classList.splice(index, 1);
+    }
+    else {
+        classList.push(newClass);
+    }
+    el.className = classList.join(' ');
    }
-   return $table;
-}
- </script>
+  
+   console.log($newDiv.className); 
+      </script>
+
 </body>
 </html>
 
