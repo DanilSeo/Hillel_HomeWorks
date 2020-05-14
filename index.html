@@ -1,151 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>canvas</title>
-    <style>
-        canvas {
-            border: 1px solid blue;
-            margin: 50px 100px;
-        }
-    </style>
-
+    <title>HW 15</title>
 </head>
-
 <body>
-
-     <canvas id="canvas" width="800" height="1000"></canvas>
-     <script src = 'three.js'></script>
-     <script src = 'OrbitControls.js'></script>
-
-
-    <script>
-        "use strict"
-
-       let canvas = document.getElementById('canvas');
-       let ctx = canvas.getContext('2d');
-       function drawSnowman(x, y , radius) {
-           ctx.beginPath();
-           ctx.arc(x, y , radius, 0, 2 * Math.PI, true);
-           ctx.fillStyle = 'aqua';
-           ctx.fill();
-       }
-       drawSnowman(400, 800 , 170);
-       drawSnowman(400, 580 , 100);
-       drawSnowman(400, 440 , 60);
-     
-       function drawButtons(x,y,radius) {
-        ctx.beginPath();
-           ctx.arc(x, y , radius, 0, 2 * Math.PI, true);
-           ctx.fillStyle = 'green';
-           ctx.fill();
-       }
-       drawButtons(400, 850 , 20);
-       drawButtons(400, 750 , 20);
-       drawButtons(400, 650 , 20);
-       drawButtons(400, 550 , 20);
-
-       function drawEyes(x,y,radius) {
-        ctx.beginPath();
-           ctx.arc(x, y , radius, 0, 2 * Math.PI, true);
-           ctx.fillStyle = 'black';
-           ctx.fill();
-       } 
-       drawEyes(375, 420 , 10);
-       drawEyes(425, 420 , 10);
-       function drawMouse(x,y,radius) {
-        ctx.beginPath();
-           ctx.arc(x, y , radius, 0, 2 * Math.PI, true);
-           ctx.fillStyle = 'red';
-           ctx.fill();
-       } 
+    <div class='container'>
+       <div class="result"></div>
+    </div>
+    <div class="accordion-container">
+        <h2>DC Comics</h2>
+        <div class="header">
+           <a href="#">Batman
+             <i class="fa fa-plus"></i>
+          </a>
+          <div class="content">
+            <p>Batman originated from an incident in Bruce's childhood;
+             after witnessing the murder of his parents Dr. Thomas Wayne and Martha Wayne, he swore vengeance against criminals, an oath tempered by a sense of justice.
+              Bruce trains himself physically and intellectually and crafts a bat-inspired persona to fight crime.</p>
+           </div>
+        </div>
+        <div class="header">
+            <a href="#">Superman
+                <i class="fa fa-plus"></i>
+            </a>
+            <div class="content">
+              <p>Superman was born on the planet Krypton and was given the name Kal-El at birth. 
+                As a baby, his parents sent him to Earth in a small spaceship moments before Krypton was destroyed in a natural cataclysm. His ship landed in the American countryside, near the fictional town of Smallville. 
+                He was found and adopted by farmers Jonathan and Martha Kent, who named him Clark Kent. Clark developed various superhuman abilities, such as incredible strength and impervious skin. His foster parents advised him to use his abilities for the benefit of humanity, and he decided to fight crime as a vigilante. 
+                To protect his privacy, he changes into a colorful costume and uses the alias "Superman" when fighting crime.</p>
+            </div>
+        </div>
+        <div class="header">
+        <a href="#">Wonder Woman
+            <i class="fa fa-plus"></i>
+       </a>
+       <div class="content">
+        <p>Wonder Woman was created by the American psychologist and writer William Moulton Marston (pen name: Charles Moulton), and artist Harry G. Peter. 
+            Marston's wife, Elizabeth, and their life partner, Olive Byrne,[5] are credited as being his inspiration for the character's appearance.
+            Marston's comics featured his ideas on DISC theory, and the character drew a great deal of inspiration from early feminists, and especially from birth control pioneer Margaret Sanger; in particular, her piece "Woman and the New Race".</p>
+      </div>
+  </div>
+  <div class="header">
+    <a href="#">Flash
+        <i class="fa fa-plus"></i>
+   </a>
+   <div class="content">
+    <p>Flash as Barry Allen is considered the very first superhero of the Silver Age comic book.
+        Barry was born with his twin brother in the family of Henry and Nora Allen, 2 weeks later than followed - this event was predetermined by the fact that Barry, being older, was famous as a very leisurely and slow, often late young man. The delivery doctor, Dr. Gilmore, said that Brother Barry was born dead (in fact, he was handed over to the Tone family, whose baby died during childbirth).
         
-       drawMouse(380, 460 , 5);
-       drawMouse(390, 465 , 5);
-       drawMouse(400, 467 , 5);
-       drawMouse(410, 465 , 5);
-       drawMouse(420, 460 , 5);
+        During the Crisis Event on Infinite Lands, Barry seemed to die, but 23 years later he was resurrected in the comic series Final Crisis.</p>
+  </div>
+</div>
+</div>
+ <style>
+  /*Task 1*/  
+td {
+    padding: 10px;
+    border: 1px solid;
+    cursor: pointer;
+}
+.result {
+    height: 30px;
+    width: 35px;
+    border: 3px solid red;
+    margin-left: 40px;
+    text-align: center;
+    font-size: 30px;
+    }
+  /*Task 2*/  
+.accordion-container {
+position: relative;
+width: 500px;
+height: auto;
+margin: 20px auto;
+}
+.accordion-container > h2{
+text-align: center;
+color: rgb(65, 55, 55);
+padding-bottom: 5px;
+margin-bottom: 30px;
+border-bottom: 1px solid #ddd;
+}
+.header {
+position: relative;
+width: 100%;
+height: auto;
+background-color: #f5f5f5;
+}
+.header > a {
+display: block;
+padding: 10px 15px;
+text-decoration: none;
+color: #555;
+font-weight: 600;
+border-bottom: 1px solid #ddd;
+-webkit-transition:all 0.2s linear;
+-moz-transition:all 0.2s linear;
+transition:all 0.2s linear;
+background-color:#3399cc;
+}
+.header > a i {
+position:relative;
+float: right;
+margin-top:4px;
+color: #666;
+}
+.header > a.active {
+background-color:red;
+color: #fff;
+}
+.header > a.active i {
+color: #fff;
+}
+.content {
+position:relative;
+width: 100%;
+height: auto;
+background-color: rgb(255, 255, 255);
+border-bottom: 1px solid #ddd;
+display:none;
+}
+.content p {
+padding: 10px 5px;
+margin: 0;
+color: #333;
+}
+</style>
+   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+ 'use strict';
+ /*Task 1*/  
+ const $container = document.querySelector('.container');
 
-       function drawNose() {
-        ctx.strokeStyle = 'black';
-        ctx.fillStyle = 'orange';
-        ctx.beginPath();
-        ctx.arc(400,440, 10, Math.PI * 3/2, Math.PI / 2, false);
-        ctx.moveTo(400,430);
-        ctx.lineTo(370,440);
-        ctx.lineTo(400,450);
-        ctx.fill();
-       }
-       drawNose();
-       function drawLeftHand() {
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 5;
-        ctx.beginPath();
-        ctx.moveTo(320, 550);
-        ctx.lineTo(220, 500);
-        ctx.moveTo(260, 520);
-        ctx.lineTo(220, 530);
-        ctx.moveTo(240, 510);
-        ctx.lineTo(230, 480);
-        ctx.stroke();
-       }
-       drawLeftHand();
+$container.prepend(createTable(3, 3));
+let $table = document.querySelector('table');
+fillTableRandom($table, 1, 101);
 
-       function drawRightHand() {
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 5;
-        ctx.beginPath();
-        ctx.moveTo(480, 550);
-        ctx.lineTo(580, 500);
-        ctx.moveTo(540, 520);
-        ctx.lineTo(560, 530);
-        ctx.moveTo(540, 520);
-        ctx.lineTo(560, 490);
-        ctx.stroke();
-       }
-       drawRightHand();
-       console.log(THREE);
-       let scene = new THREE.Scene();
-        
-       let fov = 70;
-       let aspectRatio = window.innerWidth / window.innerHeight;
-       let far = 1000;
-       let near = 0.1;
+let $result = document.querySelector('.result');
+
+$table.addEventListener('click', function(e){
+    if(e.target.tagName !== 'TD') return;
+    $result.innerHTML = e.target.textContent;
+})
 
 
-       let camera = new THREE.PerspectiveCamera(fov,aspectRatio, near, far);
+function fillTableRandom(table,min,max) {
+    for(let tr of table.rows) {
+        for(let td of tr.cells){
+            td.innerHTML = Math.floor(Math.random() * (max - min)) + min;
+        }
+    }
+}
 
-       let renderer = new THREE.WebGLRenderer();
-       renderer.setSize(800,600);
-       renderer.setClearColor('aquamarine');
-       document.body.append(renderer.domElement);
-
-       let geometry = new THREE.SphereGeometry(5, 8, 5);
-       let material = new THREE.MeshPhongMaterial( {color: 'red'} );
-       let sphere = new THREE.Mesh( geometry, material );
-       sphere.scale.set(2,2,2)
-       sphere.position.x = 2;
-
-       scene.add( sphere );
-
-       camera.position.z = 30;
-       let color = 'white';
-       let intensity = 1;
-
-       const light = new THREE.DirectionalLight(color,intensity);
-
-       light.position.set (-5,2,10);
-       scene.add( light );
-       function animate() {
-         requestAnimationFrame(animate);
-         renderer.render(scene, camera);
-         let xAxis = new THREE.Vector3(1,0,0);
-        sphere.rotateOnAxis( xAxis, 0.1 );
-         
-       }
-       animate();
+function createTable(row, col) {
+    let $table = document.createElement('table');
+    let innerContent ='';
+    for(let i = 0; i <row; i++) {
+        let row = '<tr>';
+        for(let j = 0; j < col; j++) {
+            row += '<td></td>';
+        }
+        row += '</tr>'; 
+        innerContent += row;  
+    }
+    $table.innerHTML = innerContent;
+    return $table;
+}
+/*Task 2*/  
+$(document).ready(function(){
+$(".header > a").on("click", function() {
+if($(this).hasClass('active')) {
+$(this).removeClass("active");
+$(this).siblings('.content').slideUp(200);
+$(".header > a i").removeClass("fa-minus").addClass("fa-plus");
+} 
+else {
+$(".header > a i").removeClass("fa-minus").addClass("fa-plus");
+$(this).find("i").removeClass("fa-plus").addClass("fa-minus");
+$(".header > a").removeClass("active");
+$(this).addClass("active");
+$('.content').slideUp(200);
+$(this).siblings('.content').slideDown(200);
+      }
+  });
+});
 
     </script>
 </body>
