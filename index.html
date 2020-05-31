@@ -3,191 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HW 15</title>
+    <title>Document</title>
 </head>
 <body>
-    <div class='container'>
-       <div class="result"></div>
-    </div>
-    <div class="accordion-container">
-        <h2>DC Comics</h2>
-        <div class="header">
-           <a href="#">Batman
-             <i class="fa fa-plus"></i>
-          </a>
-          <div class="content">
-            <p>Batman originated from an incident in Bruce's childhood;
-             after witnessing the murder of his parents Dr. Thomas Wayne and Martha Wayne, he swore vengeance against criminals, an oath tempered by a sense of justice.
-              Bruce trains himself physically and intellectually and crafts a bat-inspired persona to fight crime.</p>
-           </div>
-        </div>
-        <div class="header">
-            <a href="#">Superman
-                <i class="fa fa-plus"></i>
-            </a>
-            <div class="content">
-              <p>Superman was born on the planet Krypton and was given the name Kal-El at birth. 
-                As a baby, his parents sent him to Earth in a small spaceship moments before Krypton was destroyed in a natural cataclysm. His ship landed in the American countryside, near the fictional town of Smallville. 
-                He was found and adopted by farmers Jonathan and Martha Kent, who named him Clark Kent. Clark developed various superhuman abilities, such as incredible strength and impervious skin. His foster parents advised him to use his abilities for the benefit of humanity, and he decided to fight crime as a vigilante. 
-                To protect his privacy, he changes into a colorful costume and uses the alias "Superman" when fighting crime.</p>
-            </div>
-        </div>
-        <div class="header">
-        <a href="#">Wonder Woman
-            <i class="fa fa-plus"></i>
-       </a>
-       <div class="content">
-        <p>Wonder Woman was created by the American psychologist and writer William Moulton Marston (pen name: Charles Moulton), and artist Harry G. Peter. 
-            Marston's wife, Elizabeth, and their life partner, Olive Byrne,[5] are credited as being his inspiration for the character's appearance.
-            Marston's comics featured his ideas on DISC theory, and the character drew a great deal of inspiration from early feminists, and especially from birth control pioneer Margaret Sanger; in particular, her piece "Woman and the New Race".</p>
-      </div>
-  </div>
-  <div class="header">
-    <a href="#">Flash
-        <i class="fa fa-plus"></i>
-   </a>
-   <div class="content">
-    <p>Flash as Barry Allen is considered the very first superhero of the Silver Age comic book.
-        Barry was born with his twin brother in the family of Henry and Nora Allen, 2 weeks later than followed - this event was predetermined by the fact that Barry, being older, was famous as a very leisurely and slow, often late young man. The delivery doctor, Dr. Gilmore, said that Brother Barry was born dead (in fact, he was handed over to the Tone family, whose baby died during childbirth).
-        
-        During the Crisis Event on Infinite Lands, Barry seemed to die, but 23 years later he was resurrected in the comic series Final Crisis.</p>
-  </div>
-</div>
-</div>
- <style>
-  /*Task 1*/  
-td {
-    padding: 10px;
-    border: 1px solid;
-    cursor: pointer;
-}
-.result {
-    height: 30px;
-    width: 35px;
-    border: 3px solid red;
-    margin-left: 40px;
-    text-align: center;
-    font-size: 30px;
-    }
-  /*Task 2*/  
-.accordion-container {
-position: relative;
-width: 500px;
-height: auto;
-margin: 20px auto;
-}
-.accordion-container > h2{
-text-align: center;
-color: rgb(65, 55, 55);
-padding-bottom: 5px;
-margin-bottom: 30px;
-border-bottom: 1px solid #ddd;
-}
-.header {
-position: relative;
-width: 100%;
-height: auto;
-background-color: #f5f5f5;
-}
-.header > a {
-display: block;
-padding: 10px 15px;
-text-decoration: none;
-color: #555;
-font-weight: 600;
-border-bottom: 1px solid #ddd;
--webkit-transition:all 0.2s linear;
--moz-transition:all 0.2s linear;
-transition:all 0.2s linear;
-background-color:#3399cc;
-}
-.header > a i {
-position:relative;
-float: right;
-margin-top:4px;
-color: #666;
-}
-.header > a.active {
-background-color:red;
-color: #fff;
-}
-.header > a.active i {
-color: #fff;
-}
-.content {
-position:relative;
-width: 100%;
-height: auto;
-background-color: rgb(255, 255, 255);
-border-bottom: 1px solid #ddd;
-display:none;
-}
-.content p {
-padding: 10px 5px;
-margin: 0;
-color: #333;
-}
-</style>
-   
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
- 'use strict';
- /*Task 1*/  
- const $container = document.querySelector('.container');
+    <div class="box">
+        <span>0</span>
+        <button type="button" data-action="minus">-</button>
+        <button type="button" data-action="plus">+</button>
+     </div>
+     <div class="box">
+        <span>0</span>
+        <button type="button" data-action="minus">-</button>
+        <button type="button" data-action="plus">+</button>
+     </div>
+     <div class="box">
+        <span>0</span>
+        <button type="button" data-action="minus">-</button>
+        <button type="button" data-action="plus">+</button>
+     </div>
 
-$container.prepend(createTable(3, 3));
-let $table = document.querySelector('table');
-fillTableRandom($table, 1, 101);
+     <div class="container">
+        <div class="colorbox" data-color = 0>1</div>
+        <div class="colorbox" data-color = 0>2</div>
+        <div class="colorbox" data-color = 0>3</div>
+        <div class="colorbox" data-color = 0>4</div>
+        <div class="colorbox" data-color = 0>5</div>
+     </div>
+     
 
-let $result = document.querySelector('.result');
-
-$table.addEventListener('click', function(e){
-    if(e.target.tagName !== 'TD') return;
-    $result.innerHTML = e.target.textContent;
-})
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
-function fillTableRandom(table,min,max) {
-    for(let tr of table.rows) {
-        for(let td of tr.cells){
-            td.innerHTML = Math.floor(Math.random() * (max - min)) + min;
+    <style>
+      .box {
+            margin: 15px;
         }
-    }
-}
-
-function createTable(row, col) {
-    let $table = document.createElement('table');
-    let innerContent ='';
-    for(let i = 0; i <row; i++) {
-        let row = '<tr>';
-        for(let j = 0; j < col; j++) {
-            row += '<td></td>';
+        .colorbox {
+            float: left;
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            border: 1px solid black;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
         }
-        row += '</tr>'; 
-        innerContent += row;  
-    }
-    $table.innerHTML = innerContent;
-    return $table;
-}
-/*Task 2*/  
-$(document).ready(function(){
-$(".header > a").on("click", function() {
-if($(this).hasClass('active')) {
-$(this).removeClass("active");
-$(this).siblings('.content').slideUp(200);
-$(".header > a i").removeClass("fa-minus").addClass("fa-plus");
-} 
-else {
-$(".header > a i").removeClass("fa-minus").addClass("fa-plus");
-$(this).find("i").removeClass("fa-plus").addClass("fa-minus");
-$(".header > a").removeClass("active");
-$(this).addClass("active");
-$('.content').slideUp(200);
-$(this).siblings('.content').slideDown(200);
-      }
-  });
-});
+        .red {
+            background: red;
+        }
+        .green {
+            background: green;
+        }
+        .blue {
+            background: blue;
+        }
+        .yellow {
+            background: yellow;
+        }
+        .pink {
+            background-color: pink;
 
-    </script>
+        }
+    
+    </style>
+    
+      <script>
+          'use strict';
+
+          $('.box').on('click', 'button', (function(ev){
+            let count = $(this).siblings('span').text();
+            if($(this).attr('data-action') === 'plus') count++;
+            if($(this).attr('data-action') === 'minus') count--;
+            $(this).siblings('span').text(count);
+        }));
+
+        const colors = {
+            0: 'white', 
+            1: 'red',
+            2: 'green',
+            3:'blue',
+            4: 'yellow',
+            5: 'pink'
+        };
+
+        $('.colorbox').click(function(){
+            let currentColor = Number($(this).attr('data-color'));
+            let changeColor = currentColor + 1;
+            if(changeColor > Object.keys(colors).length - 1) { 
+                changeColor -= Object.keys(colors).length - 1; 
+            } 
+            $(this).removeClass(colors[currentColor]).addClass(colors[changeColor]);
+            $(this).attr('data-color', changeColor);
+            
+            $(this).parent('.container').append($(this)); 
+        })
+      </script>
+
 </body>
 </html>
