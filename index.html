@@ -3,54 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bind and Map</title>
+    <title>Fizzbuzz</title>
 </head>
 <body>
  
       <script>
           'use strict';
+           
+           /*FizzBuzz*/
+        function fizzBuzz(num) {
+            for(let i=1; i <= num; i++) {
+                if(i%3 === 0 && i%5 === 0) {
+                    console.log('fizzbizz');
+                }
+                else if(i%3 === 0) {
+                    console.log('fizz');
+                }
+                else if(i%5 === 0) {
+                    console.log('buzz');
+                }
+                else {
+                    console.log(i);
+                }
+            }
+        }
+        fizzBuzz(30);
 
-     const obj = {
-          name: 'Bruce',
-          surname: 'Wayne'
-      }
-      function makeString(content, symbol) {
-            console.log (`${content} ${this.name} ${this.surname}${symbol}`);
-        };
+        /*Поиск гласных*/
 
-         function createBind(fn, context) {
-        let bindArgs = [].slice.call(arguments, 2);
-        return function() {
-        let fnArgs = [].slice.call(arguments);
-        return fn.apply(context, bindArgs.concat(fnArgs));
-          };
-         };
-         let result1 = createBind(makeString, obj, 'Batman is','!!!');
-         result1();
-        let result2 = createBind(makeString, obj, 'Joker is not','=)))');
-        result2();
+        function findVowels(str) {
+            let count = 0;
+            const vowelsList = ['a','e', 'i', 'o','u','y'];
+            for (let letter of str.toLowerCase()) {
+                if(vowelsList.includes(letter)) {
+                    count++
+                }
+            }
+            return count
+        }
+        console.log(findVowels('In brightest day, in blackest night, No evil shall escape my sight.'));
+        
+        /*Фибоначчи*/
 
-        /***map***/
-
- const digits = [-23,-2,12,22,543, 324]
-  
-  let createMap = function(arr, cb, thisArgument) {
-  let i = 0, length = arr.length, results = [];
-  for (let i = 0; i < length; i++) {
-    results.push(cb.call(thisArgument, arr[i], i, arr));
-  }
-  return results;
-};
-
-function doubleDigits(num,index) {
-    if (index % 2 !==0) {
-    num = num ** 3 }; 
-    return num;
-};
-const digitMap = createMap(digits, doubleDigits);
-console.log(digitMap);
-console.log(digits);
-       
+        function fibonacci(num) {
+           const result = [0,1];
+           for(let i=2; i <= num; i++) {
+               const prevNum1 = result[i-1];
+               const prevNum2 = result[i-2];
+               result.push(prevNum1 + prevNum2);
+           }
+           return result[num];
+        }
+        console.log(fibonacci(5));
+        console.log(fibonacci(8));
+        console.log(fibonacci(10));
+        console.log(fibonacci(20));
       </script>
         
 </body>
