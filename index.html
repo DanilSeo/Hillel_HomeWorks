@@ -3,101 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bind and Map</title>
 </head>
 <body>
-    <div class="box">
-        <span>0</span>
-        <button type="button" data-action="minus">-</button>
-        <button type="button" data-action="plus">+</button>
-     </div>
-     <div class="box">
-        <span>0</span>
-        <button type="button" data-action="minus">-</button>
-        <button type="button" data-action="plus">+</button>
-     </div>
-     <div class="box">
-        <span>0</span>
-        <button type="button" data-action="minus">-</button>
-        <button type="button" data-action="plus">+</button>
-     </div>
-
-     <div class="container">
-        <div class="colorbox" data-color = 0>1</div>
-        <div class="colorbox" data-color = 0>2</div>
-        <div class="colorbox" data-color = 0>3</div>
-        <div class="colorbox" data-color = 0>4</div>
-        <div class="colorbox" data-color = 0>5</div>
-     </div>
-     
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-
-    <style>
-      .box {
-            margin: 15px;
-        }
-        .colorbox {
-            float: left;
-            width: 50px;
-            height: 50px;
-            margin: 10px;
-            border: 1px solid black;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 50px;
-        }
-        .red {
-            background: red;
-        }
-        .green {
-            background: green;
-        }
-        .blue {
-            background: blue;
-        }
-        .yellow {
-            background: yellow;
-        }
-        .pink {
-            background-color: pink;
-
-        }
-    
-    </style>
-    
+ 
       <script>
           'use strict';
 
-          $('.box').on('click', 'button', (function(ev){
-            let count = $(this).siblings('span').text();
-            if($(this).attr('data-action') === 'plus') count++;
-            if($(this).attr('data-action') === 'minus') count--;
-            $(this).siblings('span').text(count);
-        }));
-
-        const colors = {
-            0: 'white', 
-            1: 'red',
-            2: 'green',
-            3:'blue',
-            4: 'yellow',
-            5: 'pink'
+     const obj = {
+          name: 'Bruce',
+          surname: 'Wayne'
+      }
+      function makeString(content, symbol) {
+            console.log (`${content} ${this.name} ${this.surname}${symbol}`);
         };
 
-        $('.colorbox').click(function(){
-            let currentColor = Number($(this).attr('data-color'));
-            let changeColor = currentColor + 1;
-            if(changeColor > Object.keys(colors).length - 1) { 
-                changeColor -= Object.keys(colors).length - 1; 
-            } 
-            $(this).removeClass(colors[currentColor]).addClass(colors[changeColor]);
-            $(this).attr('data-color', changeColor);
-            
-            $(this).parent('.container').append($(this)); 
-        })
-      </script>
+         function createBind(fn, context) {
+        let bindArgs = [].slice.call(arguments, 2);
+        return function() {
+        let fnArgs = [].slice.call(arguments);
+        return fn.apply(context, bindArgs.concat(fnArgs));
+          };
+         };
+         let result1 = createBind(makeString, obj, 'Batman is','!!!');
+         result1();
+        let result2 = createBind(makeString, obj, 'Joker is not','=)))');
+        result2();
 
+        /***map***/
+
+ const digits = [-23,-2,12,22,543, 324]
+  
+  let createMap = function(arr, cb, thisArgument) {
+  let i = 0, length = arr.length, results = [];
+  for (let i = 0; i < length; i++) {
+    results.push(cb.call(thisArgument, arr[i], i, arr));
+  }
+  return results;
+};
+
+function doubleDigits(num,index) {
+    if (index % 2 !==0) {
+    num = num ** 3 }; 
+    return num;
+};
+const digitMap = createMap(digits, doubleDigits);
+console.log(digitMap);
+console.log(digits);
+       
+      </script>
+        
 </body>
 </html>
