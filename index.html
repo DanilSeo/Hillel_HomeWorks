@@ -6,58 +6,123 @@
     <title>Fizzbuzz</title>
 </head>
 <body>
- 
+<div class='container'>
+     <button class='vk'>VK Like</button>
+     <button class = "remove_vk">Remove likes</button>
+     <button class='fb'>FB Like</button>
+     <button class = "remove_fb">Remove likes</button>
+ </div>
+ <style>
+     .vk {
+         color: white;
+         font-weight: bold;
+         background-color: blue;
+         padding: 10px;
+         
+     }
+     .fb {
+         font-weight: bold;
+         background-color: aqua;
+         padding: 10px;
+     }
+     .remove_vk,
+     .remove_fb
+      {
+         background-color: red;
+         padding: 10px;
+         color: white;
+         font-weight: bold;
+     }
+ </style>
       <script>
-          'use strict';
-           
-           /*FizzBuzz*/
-        function fizzBuzz(num) {
-            for(let i=1; i <= num; i++) {
-                if(i%3 === 0 && i%5 === 0) {
-                    console.log('fizzbizz');
-                }
-                else if(i%3 === 0) {
-                    console.log('fizz');
-                }
-                else if(i%5 === 0) {
-                    console.log('buzz');
-                }
-                else {
-                    console.log(i);
+let getAdder = function () {
+     let res = 0; 
+     return function(num) {
+          res += num; 
+          return res; } };
+       const sum = getAdder();
+       console.log(sum(5));
+       console.log(sum(8));
+       console.log(sum(10));
+
+
+
+        const startFb = 0;
+        const startVk = 3;
+        const stepFb = 1;
+        const stepVk = 3;
+        const textFb = '  Like FB';
+        const textVk = '  Like VK';
+
+        const fbButton = document.querySelector('.fb');
+        const vkButton = document.querySelector('.vk');
+        const fbReset = document.querySelector('.remove_fb');
+        const vkReset = document.querySelector('.remove_vk');
+       
+        fbButton.innerHTML = startFb + textFb;
+        vkButton.innerHTML = startVk + textVk;
+
+        let fbCounter = createCounter(startFb, stepFb);
+        let vkCounter = createCounter(startVk, stepVk);
+
+        function createCounter(startCount, step) {
+            let currentCount = startCount;
+
+            return {
+                next() {
+                    return currentCount += step;
+                },
+                reset(resetValue) {
+                    currentCount = (resetValue || resetValue === 0) ? resetValue : startCount;
+                    return currentCount;
                 }
             }
         }
-        fizzBuzz(30);
 
-        /*Поиск гласных*/
+        fbButton.addEventListener('click', function(){
+            fbButton.innerHTML = fbCounter.next() + textFb;
+        });
 
-        function findVowels(str) {
-            let count = 0;
-            const vowelsList = ['a','e', 'i', 'o','u','y'];
-            for (let letter of str.toLowerCase()) {
-                if(vowelsList.includes(letter)) {
-                    count++
-                }
+        vkButton.addEventListener('click', function(){
+            vkButton.innerHTML = vkCounter.next() + textVk;
+        });
+
+        fbReset.addEventListener('click', function(){
+            fbButton.innerHTML = fbCounter.reset() + textFb;
+        });
+
+        vkReset.addEventListener('click', function(){
+            vkButton.innerHTML = vkCounter.reset() + textVk;
+        });
+
+
+/*Поиск палиндрома*/
+
+        let num = 347;
+        console.log(checkPalindrome(num)); 
+
+        function checkPalindrome(num, count = 1) {
+            let reverseNum = reverse(num);
+            console.log(count++ + ' sum: ' + num + ' + ' + reverseNum);
+                      
+            if(num === reverseNum) {               
+                return reverseNum;
             }
-            return count
+            
+            return checkPalindrome(num + reverseNum, count);    
         }
-        console.log(findVowels('In brightest day, in blackest night, No evil shall escape my sight.'));
         
-        /*Фибоначчи*/
+        function reverse(num, result = 0) {
+            result *= 10;
+            result += num % 10;
 
-        function fibonacci(num) {
-           const result = [0,1];
-           for(let i=2; i <= num; i++) {
-               const prevNum1 = result[i-1];
-               const prevNum2 = result[i-2];
-               result.push(prevNum1 + prevNum2);
-           }
-           return result[num];
+            if( Math.floor(num / 10) === 0 ) {
+                return result;
+            }
+            
+            return  reverse(Math.floor(num / 10), result);
         }
-        console.log(fibonacci(5));
-        console.log(fibonacci(8));
-        console.log(fibonacci(10));
-        console.log(fibonacci(20));
+
       </script>
         
 </body>
