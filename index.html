@@ -1,129 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fizzbuzz</title>
+    <title>Promise HW</title>
+
 </head>
+
 <body>
-<div class='container'>
-     <button class='vk'>VK Like</button>
-     <button class = "remove_vk">Remove likes</button>
-     <button class='fb'>FB Like</button>
-     <button class = "remove_fb">Remove likes</button>
- </div>
- <style>
-     .vk {
-         color: white;
-         font-weight: bold;
-         background-color: blue;
-         padding: 10px;
-         
+
+    <ul class = 'ships'></ul>
+    <button class = 'showMore'>Show more</button>
+   
+   <style>
+        .showMore {
+            margin: 10px;
+            padding: 10px;
+            background-color: aqua;
+        }
+        .showMore:active {
+            background-color: red;
+        }
+        .ship {
+            cursor: pointer;
+        }
+        .films {
+           display: block;
+        }
+        .invisible {
+            display: none;
+        }
+        
+        
+    </style>
+
+    <script>
+            "use strict"
+
+const $shipsList = document.querySelector('.ships');
+let currentLinkShips = 'https://swapi.dev/api/starships';
+let linkFilms = 'https://swapi.dev/api/films/';
+const $showMore = document.querySelector('.showMore');
+
+
+loadShips(getSWShips(currentLinkShips));
+
+$showMore.addEventListener('click', function() {
+     if(currentLinkShips) {
+        loadShips(getSWShips(currentLinkShips));
      }
-     .fb {
-         font-weight: bold;
-         background-color: aqua;
-         padding: 10px;
-     }
-     .remove_vk,
-     .remove_fb
-      {
-         background-color: red;
-         padding: 10px;
-         color: white;
-         font-weight: bold;
-     }
- </style>
-      <script>
-let getAdder = function () {
-     let res = 0; 
-     return function(num) {
-          res += num; 
-          return res; } };
-       const sum = getAdder();
-       console.log(sum(5));
-       console.log(sum(8));
-       console.log(sum(10));
+})
 
-
-
-        const startFb = 0;
-        const startVk = 3;
-        const stepFb = 1;
-        const stepVk = 3;
-        const textFb = '  Like FB';
-        const textVk = '  Like VK';
-
-        const fbButton = document.querySelector('.fb');
-        const vkButton = document.querySelector('.vk');
-        const fbReset = document.querySelector('.remove_fb');
-        const vkReset = document.querySelector('.remove_vk');
+function loadShips(ships) { 
+    ships.then(function(ships){
+        let shipTitles = ships.map(ship =>{
+            return ship.title;
+        })
        
-        fbButton.innerHTML = startFb + textFb;
-        vkButton.innerHTML = startVk + textVk;
+        shipTitles.forEach(item => {
+            const $item = document.createElement('li');
+            $item.classList.add('ship');
+            $item.innerHTML = item;
+            $shipsList.append($item);
+        
+        
+            $item.addEventListener('click', function(ship) {
 
-        let fbCounter = createCounter(startFb, stepFb);
-        let vkCounter = createCounter(startVk, stepVk);
+                if(!$item.firstElementChild) {
+                    
+                    let filmsUrlarr = ships.find(ship => {
+                        return ship.title === $item.firstChild.textContent;
+                    }).filmsUrl;
 
-        function createCounter(startCount, step) {
-            let currentCount = startCount;
-
-            return {
-                next() {
-                    return currentCount += step;
-                },
-                reset(resetValue) {
-                    currentCount = (resetValue || resetValue === 0) ? resetValue : startCount;
-                    return currentCount;
+                    let filmsArr = filmsUrlarr.map(url => {
+                        return getMovieTitle(url);
+                    })
+                    Promise.all([ships, filmsArr])
+                    .then(data => {
+                        let $filmList = createFilmList(data[1]);
+                        $item.append($filmList);
+                    })
+                } else {
+                    $item.querySelector('.films').classList.toggle('invisible');
                 }
-            }
-        }
+            })
+        })
+    })
+}  
 
-        fbButton.addEventListener('click', function(){
-            fbButton.innerHTML = fbCounter.next() + textFb;
-        });
+function createFilmList(filmsArr) {
+    const $filmList = document.createElement('ul');
+    $filmList.classList.add('films');
 
-        vkButton.addEventListener('click', function(){
-            vkButton.innerHTML = vkCounter.next() + textVk;
-        });
+    Promise.all(filmsArr)
+        .then(filmsArr => {
+            fillList($filmList, filmsArr, 'film');
+        })
+    
+    return $filmList;
+}    
 
-        fbReset.addEventListener('click', function(){
-            fbButton.innerHTML = fbCounter.reset() + textFb;
-        });
+function fillList($list, itemsArray, itemClass) {
+    itemsArray.forEach(item => {
+        const $item = document.createElement('li');
+        $item.classList.add(itemClass);
+        $item.innerHTML = item;
+        $list.append($item);
+    })
+} 
 
-        vkReset.addEventListener('click', function(){
-            vkButton.innerHTML = vkCounter.reset() + textVk;
-        });
+function getSWShips(link) {
+    return fetch(link)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            let ships = [];
 
+            data.results.forEach(ship => {
+                ships.push(
+                    {
+                    'title': ship.name,
+                    'filmsUrl': ship.films
+                    }
+                );
+            });
 
-/*Поиск палиндрома*/
+            currentLinkShips = data.next;
+            if(!currentLinkShips) $showMore.disabled = true;
+            return ships;
+        })
+}
 
-        let num = 347;
-        console.log(checkPalindrome(num)); 
-
-        function checkPalindrome(num, count = 1) {
-            let reverseNum = reverse(num);
-            console.log(count++ + ' sum: ' + num + ' + ' + reverseNum);
-                      
-            if(num === reverseNum) {               
-                return reverseNum;
-            }
-            
-            return checkPalindrome(num + reverseNum, count);    
-        }
-        
-        function reverse(num, result = 0) {
-            result *= 10;
-            result += num % 10;
-
-            if( Math.floor(num / 10) === 0 ) {
-                return result;
-            }
-            
-            return  reverse(Math.floor(num / 10), result);
-        }
-
-      </script>
-        
+function getMovieTitle(link) {
+    return fetch(link)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            return data.title; 
+        })
+}
+    </script>
 </body>
-</html>
+
+</html> 
