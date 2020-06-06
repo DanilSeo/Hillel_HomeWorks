@@ -4,145 +4,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promise HW</title>
+    <title>Конструктор сущности</title>
+   
 
 </head>
 
-<body>
-
-    <ul class = 'ships'></ul>
-    <button class = 'showMore'>Show more</button>
-   
-   <style>
-        .showMore {
-            margin: 10px;
-            padding: 10px;
-            background-color: aqua;
-        }
-        .showMore:active {
-            background-color: red;
-        }
-        .ship {
-            cursor: pointer;
-        }
-        .films {
-           display: block;
-        }
-        .invisible {
-            display: none;
-        }
-        
-        
-    </style>
+<body> 
 
     <script>
-            "use strict"
+        "use strict"
+        function Student(name, surName, age, marks) {
+            this.name = name;
+            this.surName = surName;
+            this.age = age;
+            this.marks = marks;
+            this.isPresent = new Array(25);
+            this.count = 0;
+        }
 
-const $shipsList = document.querySelector('.ships');
-let currentLinkShips = 'https://swapi.dev/api/starships';
-let linkFilms = 'https://swapi.dev/api/films/';
-const $showMore = document.querySelector('.showMore');
 
+        Student.prototype = {
 
-loadShips(getSWShips(currentLinkShips));
+            constructor: Student,
+            
+            present : function() {
+                if( this.count < this.isPresent.length) this.isPresent[this.count++] = true;
+            },
+            abent : function() {
+                if( this.count < this.isPresent.length) this.isPresent[this.count++] = false;
+            },
 
-$showMore.addEventListener('click', function() {
-     if(currentLinkShips) {
-        loadShips(getSWShips(currentLinkShips));
-     }
-})
+            getAvgMarks : function() {
+                return this.marks.reduce((acc, current) => {
+                    return acc + current;
+                }) / this.marks.length;
+            },
 
-function loadShips(ships) { 
-    ships.then(function(ships){
-        let shipTitles = ships.map(ship =>{
-            return ship.title;
-        })
-       
-        shipTitles.forEach(item => {
-            const $item = document.createElement('li');
-            $item.classList.add('ship');
-            $item.innerHTML = item;
-            $shipsList.append($item);
-        
-        
-            $item.addEventListener('click', function(ship) {
+            getAge : function() {
+                return this.age;
+            },
 
-                if(!$item.firstElementChild) {
-                    
-                    let filmsUrlarr = ships.find(ship => {
-                        return ship.title === $item.firstChild.textContent;
-                    }).filmsUrl;
-
-                    let filmsArr = filmsUrlarr.map(url => {
-                        return getMovieTitle(url);
-                    })
-                    Promise.all([ships, filmsArr])
-                    .then(data => {
-                        let $filmList = createFilmList(data[1]);
-                        $item.append($filmList);
-                    })
-                } else {
-                    $item.querySelector('.films').classList.toggle('invisible');
-                }
-            })
-        })
-    })
-}  
-
-function createFilmList(filmsArr) {
-    const $filmList = document.createElement('ul');
-    $filmList.classList.add('films');
-
-    Promise.all(filmsArr)
-        .then(filmsArr => {
-            fillList($filmList, filmsArr, 'film');
-        })
-    
-    return $filmList;
-}    
-
-function fillList($list, itemsArray, itemClass) {
-    itemsArray.forEach(item => {
-        const $item = document.createElement('li');
-        $item.classList.add(itemClass);
-        $item.innerHTML = item;
-        $list.append($item);
-    })
-} 
-
-function getSWShips(link) {
-    return fetch(link)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            let ships = [];
-
-            data.results.forEach(ship => {
-                ships.push(
-                    {
-                    'title': ship.name,
-                    'filmsUrl': ship.films
+            getSummary : function() {
+                let lesson = 0;
+                let visit = 0;
+                this.isPresent.forEach(el => {
+                    if(el !== null) {
+                        lesson++;
+                        visit += el;
                     }
-                );
-            });
+                });
+                
+                let averageVisit = visit / lesson;
+                let averageMark = this.getAvgMarks();
+                if(averageVisit > 0.9 && averageMark > 90) {
+                    return 'Ути какой молодчинка!';
+                } else if (averageVisit > 0.9 || averageMark > 90) {
+                    return 'Норм, но можно лучше';
+                } else {
+                    return 'Редиска!';
+                }
+            }
+        }
 
-            currentLinkShips = data.next;
-            if(!currentLinkShips) $showMore.disabled = true;
-            return ships;
-        })
-}
+        Student.prototype.constructor = Student;
+                  
+        let student1 = new Student('Bruce', 'Wayne', 23, [90, 85, 35]);
+        let student2 = new Student('Clark', 'Kent', 21, [91, 90, 95]);
+        let student3 = new Student('Diana', 'Prince', 1500, [90, 88, 90]);
+  
+        student1.present();
+        student1.abent();
 
-function getMovieTitle(link) {
-    return fetch(link)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            return data.title; 
-        })
-}
+        student2.present();
+
+        student3.present();
+        
+        console.log(student1.getSummary());
+        console.log(student1.getAge());
+        console.log(student2.getSummary());
+        console.log(student2.getAge());
+        console.log(student3.getSummary());
+        console.log(student3.getAge());
+
+
+
+
+        
+
+
     </script>
 </body>
 
-</html> 
+</html>
